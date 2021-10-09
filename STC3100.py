@@ -1,4 +1,5 @@
-#define STC3100_REG_MODE                 0x00 /*Mode Register                 */
+STC3100_REG_MODE = 0x00 #Mode Register
+
 #define STC3100_REG_CTRL                 0x01 /*Control and Status Register   */
 #define STC3100_REG_CHARGE_LOW           0x02 /*Gas Gauge Charge Data Bits 0-7*/
 #define STC3100_REG_CHARGE_HIGH          0x03 /*Gas Gauge Charge Data Bits 8-15*/    
