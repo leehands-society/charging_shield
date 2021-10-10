@@ -1,6 +1,10 @@
 from gpiozero import LED
 from time import sleep
 import smbus
+import STC3100
+
+stc3100 = STC3100.STC3100(0x70) # stc3100 address is '0x70'
+
 
 STC3100_REG_MODE  = 0x00
 STC3100_REG_ID0   = 0x18
