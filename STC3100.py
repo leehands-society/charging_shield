@@ -1,3 +1,11 @@
+###########################################
+## Python Module (STC3100) from Leehands ##
+## Update : 2021.10.10                   ##
+## Version : Beta 0.1                    ##
+## Engineer : Namhun                     ##
+###########################################
+import smbus
+
 STC3100_REG_MODE               = 0x00 # Mode Register
 STC3100_REG_CTRL               = 0x01 # Control and Status Register   
 STC3100_REG_CHARGE_LOW         = 0x02 # Gas Gauge Charge Data Bits 0-7
@@ -37,3 +45,17 @@ STC3100_REG_RAM24              = 0x38
 STC3100_REG_RAM26              = 0x3A 
 STC3100_REG_RAM28              = 0x3C 
 STC3100_REG_RAM30              = 0x3E 
+
+
+class STC3100:
+  def __init__(self,addr):
+    self.addr = addr
+    self.bus = smbus.SMBus(1) # 0 = /dev/i2c-0 , 1 = /dev/i2c-1
+  
+  def print_test(self):
+    print("STC3100 is ok")
+  
+  def readVoltage(self):
+    
+          
+   
