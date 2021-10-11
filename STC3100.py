@@ -83,8 +83,3 @@ class STC3100:
     
   def print_test(self):
     print("STC3100 is ok")
-  
-  def readVoltage(self):
-    
-          
-   
