@@ -46,6 +46,18 @@ STC3100_REG_RAM26              = 0x3A
 STC3100_REG_RAM28              = 0x3C 
 STC3100_REG_RAM30              = 0x3E 
 
+STC3100_OK  = 0
+
+##############################################################################
+SENSERESISTOR  =  33    # sense resistor value in milliOhms (10min, 100max)
+                        #TO BE DEFINED ACCORDING TO HARDWARE IMPLEMENTATION
+##############################################################################
+
+CurrentFactor     = (48210/SENSERESISTOR)   # LSB=11.77uV/R= ~48210/R/4096 - convert to mA
+ChargeCountFactor = (27443/SENSERESISTOR)   # LSB=6.7uVh/R ~27443/R/4096 - converter to mAh
+VoltageFactor     = 9994                    # LSB=2.44mV ~9994/4096 - convert to mV
+TemperatureFactor = 5120                    # LSB=0.125°C ~5120/4096 - convert to 0.1°C
+
 
 class STC3100:
   def __init__(self,addr):
@@ -74,12 +86,22 @@ class STC3100:
       return (s32_res)
 
     return (STC3100_OK)
+  def powerdown(self):
+    s32_res = self.writebyte(STC3100_REG_MODE , 0)
+    if(s32_res != STC3100_OK):
+      return s32_res
+    
   def writebyte(self,cmd,data):
-    self.bus.write_byte_data(self.addr,cmd,data)
+    res = self.bus.write_byte_data(self.addr,cmd,data)
+    if res == STC3100_OK:
+      res = 0
+    else:
+      res = -1
+    return res
     
   def readbyte(self,cmd):
-    buff = self.bus.read_byte_data(self.addr,cmd)
-    return buff
+    res = self.bus.read_byte_data(self.addr,cmd)
+    return res
     
   def print_test(self):
     print("STC3100 is ok")
