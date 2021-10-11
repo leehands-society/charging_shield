@@ -90,6 +90,27 @@ class STC3100:
     s32_res = self.writebyte(STC3100_REG_MODE , 0)
     if(s32_res != STC3100_OK):
       return s32_res
+  def readbatterydata(self):
+    pu8_data[0] = self.readbyte(0)
+    pu8_data[1] = self.readbyte(1)
+    pu8_data[2] = self.readbyte(2)
+    pu8_data[3] = self.readbyte(3)
+    pu8_data[4] = self.readbyte(4)
+    pu8_data[5] = self.readbyte(5)
+    pu8_data[6] = self.readbyte(6)
+    pu8_data[7] = self.readbyte(7)
+    pu8_data[8] = self.readbyte(8)
+    pu8_data[9] = self.readbyte(9)
+    pu8_data[10] = self.readbyte(10)
+    pu8_data[11] = self.readbyte(11)
+    #charge count
+    s16_value = pu8_data[3]
+    s16_value = (s16_value<<8) + pu8_data[2]
+    s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor) # result in mAh
+    
+  def conv(self,value,factor):
+    return( ( (s32) s16_value * u16_factor ) >> 12 )
+    
     
   def writebyte(self,cmd,data):
     res = self.bus.write_byte_data(self.addr,cmd,data)
