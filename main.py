@@ -15,36 +15,36 @@ STC3100_REG_VOLTAGE_HIGH = 0x09
 STC3100_REG_CURRENT_LOW  = 0x06
 STC3100_REG_CURRENT_HIGH = 0x07
 
-bus = smbus.SMBus(1) # 0 = /dev/i2c-0 , 1 = /dev/i2c-1
-res = bus.read_byte_data(0x70,STC3100_REG_ID0)
-if res != 0x10:
-    print "fail"
-res = bus.read_byte_data(0x70,STC3100_REG_CTRL)
-print ("REG_CTR : ") 
-print res
+#bus = smbus.SMBus(1) # 0 = /dev/i2c-0 , 1 = /dev/i2c-1
+#res = bus.read_byte_data(0x70,STC3100_REG_ID0)
+#if res != 0x10:
+#    print "fail"
+#res = bus.read_byte_data(0x70,STC3100_REG_CTRL)
+#print ("REG_CTR : ") 
+#print res
+#
+#res = bus.write_byte_data(0x70,STC3100_REG_CTRL,0x02)
+#print ("REG_CTR : ") 
+#print res
+#
+#res = bus.write_byte_data(0x70,STC3100_REG_MODE,0x10)
+#print ("REG_MOD : ") 
+#print res
 
-res = bus.write_byte_data(0x70,STC3100_REG_CTRL,0x02)
-print ("REG_CTR : ") 
-print res
-
-res = bus.write_byte_data(0x70,STC3100_REG_MODE,0x10)
-print ("REG_MOD : ") 
-print res
-
-
+stc3100.startup()
 ld_100 = LED(6)
 ld_75 = LED(13)
 ld_50 = LED(19)
 ld_25 = LED(26)
 
 while True:
-    res_low = bus.read_byte_data(0x70,STC3100_REG_VOLTAGE_LOW)
-    res_high = bus.read_byte_data(0x70,STC3100_REG_VOLTAGE_HIGH)
-    print res_low + (res_high*16)
-    res_low = bus.read_byte_data(0x70,STC3100_REG_CURRENT_LOW)
-    res_high = bus.read_byte_data(0x70,STC3100_REG_CURRENT_HIGH)
-    print res_low + (res_high*16)
-
+#    res_low = bus.read_byte_data(0x70,STC3100_REG_VOLTAGE_LOW)
+#    res_high = bus.read_byte_data(0x70,STC3100_REG_VOLTAGE_HIGH)
+#    print res_low + (res_high*16)
+#    res_low = bus.read_byte_data(0x70,STC3100_REG_CURRENT_LOW)
+#    res_high = bus.read_byte_data(0x70,STC3100_REG_CURRENT_HIGH)
+#    print res_low + (res_high*16)
+    stc3100.readbatterydata()
     sleep(0.25)
     ld_100.off()
     ld_75.on()

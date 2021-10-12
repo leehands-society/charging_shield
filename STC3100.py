@@ -56,7 +56,7 @@ SENSERESISTOR  =  33    # sense resistor value in milliOhms (10min, 100max)
 CurrentFactor     = (48210/SENSERESISTOR)   # LSB=11.77uV/R= ~48210/R/4096 - convert to mA
 ChargeCountFactor = (27443/SENSERESISTOR)   # LSB=6.7uVh/R ~27443/R/4096 - converter to mAh
 VoltageFactor     = 9994                    # LSB=2.44mV ~9994/4096 - convert to mV
-TemperatureFactor = 5120                    # LSB=0.125°C ~5120/4096 - convert to 0.1°C
+TemperatureFactor = 5120                    # LSB=0.125 ~5120/4096 - convert to 0.1
 
 
 class STC3100:
@@ -70,55 +70,54 @@ class STC3100:
     #first, check the presence of the STC3100 by reading first byte of dev. ID
     s32_res = self.readbyte(STC3100_REG_ID0)
     if s32_res!= 0x10:
-      return (-1)
-    
+        print (">ID0 fail")
+        return (-1)
     #read the REG_CTRL to reset the GG_EOC and VTM_EOC bits
-    self.readbyte(STC3100_REG_CTRL)
-
+    s32_res = self.readbyte(STC3100_REG_CTRL)
     #write 0x02 into the REG_CTRL to reset the accumulator and counter and clear the PORDET bit,
-    s32_res = self.writebyte(STC3100_REG_CTRL, 0x02)
-    if (s32_res!= STC3100_OK) :
-      return (s32_res)
-
+    self.writebyte(STC3100_REG_CTRL, 0x02)
     #then 0x10 into the REG_MODE register to start the STC3100 in 14-bit resolution mode.
-    s32_res = self.writebyte(STC3100_REG_MODE, 0x10)
-    if (s32_res!= STC3100_OK) :
-      return (s32_res)
-
+    self.writebyte(STC3100_REG_MODE, 0x10)
+    
+    print(">startup ok")
     return (STC3100_OK)
   def powerdown(self):
     s32_res = self.writebyte(STC3100_REG_MODE , 0)
     if(s32_res != STC3100_OK):
       return s32_res
   def readbatterydata(self):
-    pu8_data[0] = self.readbyte(0)
-    pu8_data[1] = self.readbyte(1)
-    pu8_data[2] = self.readbyte(2)
-    pu8_data[3] = self.readbyte(3)
-    pu8_data[4] = self.readbyte(4)
-    pu8_data[5] = self.readbyte(5)
-    pu8_data[6] = self.readbyte(6)
-    pu8_data[7] = self.readbyte(7)
-    pu8_data[8] = self.readbyte(8)
-    pu8_data[9] = self.readbyte(9)
-    pu8_data[10] = self.readbyte(10)
-    pu8_data[11] = self.readbyte(11)
+    pu8_data = []
+    pu8_data.append(self.readbyte(6))
+    pu8_data.append(self.readbyte(7))
+    print(pu8_data[0])
+    print(pu8_data[1])
+    pu8_data.append(self.readbyte(8))
+    pu8_data.append(self.readbyte(9))
+    print(pu8_data[2])
+    print(pu8_data[3])
+    #pu8_data[0] = self.readbyte(0)
+    #pu8_data[1] = self.readbyte(1)
+    #pu8_data[2] = self.readbyte(2)
+    #pu8_data[3] = self.readbyte(3)
+    #pu8_data[4] = self.readbyte(4)
+    #pu8_data[5] = self.readbyte(5)
+    #pu8_data[6] = self.readbyte(6)
+    #pu8_data[7] = self.readbyte(7)
+    #pu8_data[8] = self.readbyte(8)
+    #pu8_data[9] = self.readbyte(9)
+    #pu8_data[10] = self.readbyte(10)
+    #pu8_data[11] = self.readbyte(11)
     #charge count
-    s16_value = pu8_data[3]
-    s16_value = (s16_value<<8) + pu8_data[2]
-    s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor) # result in mAh
+    #s16_value = pu8_data[3]
+    #s16_value = (s16_value<<8) + pu8_data[2]
+    #s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor) # result in mAh
     
   def conv(self,value,factor):
-    return( ( (s32) s16_value * u16_factor ) >> 12 )
-    
+#    return( ( (s32) s16_value * u16_factor ) >> 12 )
+    return 1   
     
   def writebyte(self,cmd,data):
-    res = self.bus.write_byte_data(self.addr,cmd,data)
-    if res == STC3100_OK:
-      res = 0
-    else:
-      res = -1
-    return res
+    self.bus.write_byte_data(self.addr,cmd,data)
     
   def readbyte(self,cmd):
     res = self.bus.read_byte_data(self.addr,cmd)
