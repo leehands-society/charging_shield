@@ -68,20 +68,20 @@ class STC3100:
     
   def startup(self):
     #first, check the presence of the STC3100 by reading first byte of dev. ID
-    s32_res = STC3100_ReadByte(STC3100_REG_ID0)
+    s32_res = self.readbyte(STC3100_REG_ID0)
     if s32_res!= 0x10:
       return (-1)
     
     #read the REG_CTRL to reset the GG_EOC and VTM_EOC bits
-    STC3100_ReadByte(STC3100_REG_CTRL)
+    self.readbyte(STC3100_REG_CTRL)
 
     #write 0x02 into the REG_CTRL to reset the accumulator and counter and clear the PORDET bit,
-    s32_res = STC3100_WriteByte(STC3100_REG_CTRL, 0x02)
+    s32_res = self.writebyte(STC3100_REG_CTRL, 0x02)
     if (s32_res!= STC3100_OK) :
       return (s32_res)
 
     #then 0x10 into the REG_MODE register to start the STC3100 in 14-bit resolution mode.
-    s32_res = STC3100_WriteByte(STC3100_REG_MODE, 0x10)
+    s32_res = self.writebyte(STC3100_REG_MODE, 0x10)
     if (s32_res!= STC3100_OK) :
       return (s32_res)
 
