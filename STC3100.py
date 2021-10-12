@@ -89,12 +89,28 @@ class STC3100:
     pu8_data = []
     pu8_data.append(self.readbyte(6))
     pu8_data.append(self.readbyte(7))
-    print(pu8_data[0])
-    print(pu8_data[1])
+    s16_value = pu8_data[1]
+    s16_value = (s16_value<<8) + pu8_data[0]
+    s16_value &= 0x3fff
+    if(s16_value >= 0x2000):
+        s16_value -= 0x4000
+    s16_BattCurrent = self.conv(s16_value,CurrentFactor)
+    print("Batt Current : " )
+    print(s16_BattCurrent)
+    
+    
     pu8_data.append(self.readbyte(8))
     pu8_data.append(self.readbyte(9))
-    print(pu8_data[2])
-    print(pu8_data[3])
+    s16_value =pu8_data[3]
+    s16_value = (s16_value<<8) +pu8_data[2]
+    s16_value &= 0x0fff
+    if(s16_value > 0x0800):
+        s16_value -= 0x1000
+    s16_BattVoltage = self.conv(s16_value,VoltageFactor)
+    print("Batt Volatage : ")
+    print(s16_BattVoltage)
+    
+    
     #pu8_data[0] = self.readbyte(0)
     #pu8_data[1] = self.readbyte(1)
     #pu8_data[2] = self.readbyte(2)
@@ -113,8 +129,7 @@ class STC3100:
     #s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor) # result in mAh
     
   def conv(self,value,factor):
-#    return( ( (s32) s16_value * u16_factor ) >> 12 )
-    return 1   
+    return( ( value * factor ) >> 12 )
     
   def writebyte(self,cmd,data):
     self.bus.write_byte_data(self.addr,cmd,data)
