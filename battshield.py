@@ -15,7 +15,7 @@ ld_50 = LED(19)
 ld_25 = LED(26)
 
 class battshield :
-  def __init__(self)
+  def __init__(self):
     self.battlevel = 0
     self.battstatus = 0
     
