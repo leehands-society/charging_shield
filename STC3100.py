@@ -87,6 +87,7 @@ class STC3100:
       return s32_res
   def readbatterydata(self):
     pu8_data = []
+    battdata = []
     
     # currunt 
     pu8_data.append(self.readbyte(6))
@@ -99,6 +100,7 @@ class STC3100:
     s16_BattCurrent = self.conv(s16_value,CurrentFactor)
     print("Batt Current : " )
     print(s16_BattCurrent)
+    battdata.append(s16_BattCurrent)
     
     # voltage
     pu8_data.append(self.readbyte(8))
@@ -111,6 +113,7 @@ class STC3100:
     s16_BattVoltage = self.conv(s16_value,VoltageFactor)
     print("Batt Volatage : ")
     print(s16_BattVoltage)
+    battdata.append(s16_BattVoltage)
     
     # charge count
     pu8_data.append(self.readbyte(2))
@@ -120,6 +123,7 @@ class STC3100:
     s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor)
     print("Battcharge Count : ")
     print(s16_BattChargeCount)
+    battdata.append(s16_BattChargeCount)
     
     # conversion counter
     pu8_data.append(self.readbyte(4))
@@ -129,6 +133,7 @@ class STC3100:
     s16_BattCounter = s16_value
     print("Batt Count : ")
     print(s16_BattCounter)
+    battdata.append(s16_BattCounter)
     
     # temperature
     pu8_data.append(self.readbyte(10))
@@ -141,7 +146,9 @@ class STC3100:
     s16_BattTemperature = self.conv(s16_value,  TemperatureFactor)
     print("Batt Temperature : ")
     print(s16_BattTemperature)
+    battdata.append(s16_BattTemperature)
     
+    return battdata
     
     
   def conv(self,value,factor):
