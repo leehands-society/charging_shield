@@ -26,7 +26,7 @@ class battshield :
   def indicatebatt(self,volt):
     if self.flashingCnt  == 1 :
       self.flashingCnt = 0
-    else
+    else :
       self.flashingCnt = 1
     
     if volt < 3000 :
