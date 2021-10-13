@@ -20,15 +20,18 @@ STC3100_REG_CURRENT_HIGH = 0x07
 stc3100.startup()
 battdata = []
 ReadCnt = 0
+ErrorCnt = 0
 
 while True:
-    ReadCnt += 1
-    if ReadCnt > 5 :
-        ReadCnt = 0
-    
-    battdata = stc3100.readbatterydata()
-    battshield.indicatebatt(battdata[1])
-    status = stc3100.readbyte(1) # 1 is Control and Status data
-    print(status)
     sleep(0.25)
+    status = stc3100.readbyte(1) # 1 is Control and Status data
+    if(status == 0x000C ) : # Batteryt current (b0100) & Voltage & Temperature (b1000) Converion 
+        battdata = stc3100.readbatterydata()
+        battshield.indicatebatt(battdata[1])
+        ErrorCnt = 0
+    else :
+        ErrorCnt += 1
+        if(ErrorCnt > 10):
+            battshield.commerror()
+   
     
