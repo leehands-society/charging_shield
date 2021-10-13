@@ -55,6 +55,11 @@ class battshield :
       ld_50.off()
       ld_25.off()
       
+  def commerror(self)
+    ld_25.on()
+    ld_50.on()
+    ld_75.on()
+    ld_100.on()
     
     
     
