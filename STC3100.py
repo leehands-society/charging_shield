@@ -87,6 +87,8 @@ class STC3100:
       return s32_res
   def readbatterydata(self):
     pu8_data = []
+    
+    # currunt 
     pu8_data.append(self.readbyte(6))
     pu8_data.append(self.readbyte(7))
     s16_value = pu8_data[1]
@@ -98,7 +100,7 @@ class STC3100:
     print("Batt Current : " )
     print(s16_BattCurrent)
     
-    
+    # voltage
     pu8_data.append(self.readbyte(8))
     pu8_data.append(self.readbyte(9))
     s16_value =pu8_data[3]
@@ -110,23 +112,37 @@ class STC3100:
     print("Batt Volatage : ")
     print(s16_BattVoltage)
     
+    # charge count
+    pu8_data.append(self.readbyte(2))
+    pu8_data.append(self.readbyte(3))
+    s16_value = pu8_data[5]
+    s16_value = (s16_value<<8) +pu8_data[4]
+    s16_BattChargeCount = conv(s16_value,ChargeCountFactor)
+    print("Battcharge Count : ")
+    print(s16_BattChargeCount)
     
-    #pu8_data[0] = self.readbyte(0)
-    #pu8_data[1] = self.readbyte(1)
-    #pu8_data[2] = self.readbyte(2)
-    #pu8_data[3] = self.readbyte(3)
-    #pu8_data[4] = self.readbyte(4)
-    #pu8_data[5] = self.readbyte(5)
-    #pu8_data[6] = self.readbyte(6)
-    #pu8_data[7] = self.readbyte(7)
-    #pu8_data[8] = self.readbyte(8)
-    #pu8_data[9] = self.readbyte(9)
-    #pu8_data[10] = self.readbyte(10)
-    #pu8_data[11] = self.readbyte(11)
-    #charge count
-    #s16_value = pu8_data[3]
-    #s16_value = (s16_value<<8) + pu8_data[2]
-    #s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor) # result in mAh
+    # conversion counter
+    pu8_data.append(self.readbyte(4))
+    pu8_data.append(self.readbyte(5))
+    s16_value = pu8_data[7]
+    s16_value = (s16_value<<8) +pu8_data[6]
+    s16_BattCounter = s16_value
+    print("Batt Count : ")
+    print(s16_BattCounter)
+    
+    # temperature
+    pu8_data.append(self.readbyte(10))
+    pu8_data.append(self.readbyte(11))
+    s16_value = pu8_data[9]
+    s16_value = (s16_value<<8) +pu8_data[8]
+    s16_value &= 0x0fff
+    if(s16_value >= 0x0800):
+      s16_value -= 0x1000
+    s16_BattTemperature = conv(s16_value,  TemperatureFactor)
+    print("Batt Temperature : ")
+    print(s16_BattTemperature)
+    
+    
     
   def conv(self,value,factor):
     return( ( value * factor ) >> 12 )
