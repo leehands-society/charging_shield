@@ -5,6 +5,7 @@ import STC3100
 import battshield
 
 stc3100 = STC3100.STC3100(0x70) # stc3100 address is '0x70'
+battshield = battshield.battshield()
 
 
 STC3100_REG_MODE  = 0x00
