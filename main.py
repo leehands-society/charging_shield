@@ -29,6 +29,6 @@ while True:
     battdata = stc3100.readbatterydata()
     battshield.indicatebatt(battdata[1])
     status = stc3100.readbyte(1) # 1 is Control and Status data
-    print(status)a[1])
+    print(status)
     sleep(0.25)
     
