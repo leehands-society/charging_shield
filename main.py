@@ -42,7 +42,9 @@ ReadCnt = 0
 while True:
     ReadCnt += 1
     if ReadCnt > 5 :
-        ReadCnt = 0        battdata = stc3100.readbatterydata()
+        ReadCnt = 0
+    
+    battdata = stc3100.readbatterydata()
     print("Batt Curruent : ")
     print(battdata[0])
     print("Batt Volatage : ")
