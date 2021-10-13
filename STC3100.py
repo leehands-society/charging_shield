@@ -98,8 +98,8 @@ class STC3100:
     if(s16_value >= 0x2000):
         s16_value -= 0x4000
     s16_BattCurrent = self.conv(s16_value,CurrentFactor)
-    print("Batt Current : " )
-    print(s16_BattCurrent)
+    #print("Batt Current : " )
+    #print(s16_BattCurrent)
     battdata.append(s16_BattCurrent)
     
     # voltage
@@ -111,8 +111,8 @@ class STC3100:
     if(s16_value > 0x0800):
         s16_value -= 0x1000
     s16_BattVoltage = self.conv(s16_value,VoltageFactor)
-    print("Batt Volatage : ")
-    print(s16_BattVoltage)
+    #print("Batt Volatage : ")
+    #print(s16_BattVoltage)
     battdata.append(s16_BattVoltage)
     
     # charge count
@@ -121,8 +121,8 @@ class STC3100:
     s16_value = pu8_data[5]
     s16_value = (s16_value<<8) +pu8_data[4]
     s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor)
-    print("Battcharge Count : ")
-    print(s16_BattChargeCount)
+    #print("Battcharge Count : ")
+    #print(s16_BattChargeCount)
     battdata.append(s16_BattChargeCount)
     
     # conversion counter
@@ -131,8 +131,8 @@ class STC3100:
     s16_value = pu8_data[7]
     s16_value = (s16_value<<8) +pu8_data[6]
     s16_BattCounter = s16_value
-    print("Batt Count : ")
-    print(s16_BattCounter)
+    #print("Batt Count : ")
+    #print(s16_BattCounter)
     battdata.append(s16_BattCounter)
     
     # temperature
@@ -144,8 +144,8 @@ class STC3100:
     if(s16_value >= 0x0800):
       s16_value -= 0x1000
     s16_BattTemperature = self.conv(s16_value,  TemperatureFactor)
-    print("Batt Temperature : ")
-    print(s16_BattTemperature)
+    #print("Batt Temperature : ")
+    #print(s16_BattTemperature)
     battdata.append(s16_BattTemperature)
     
     return battdata
