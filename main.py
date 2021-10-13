@@ -31,6 +31,7 @@ while True:
         ErrorCnt = 0
     else :
         ErrorCnt += 1
+        print(ErrorCnt)
         if(ErrorCnt > 10):
             battshield.commerror()
    
