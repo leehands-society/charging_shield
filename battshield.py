@@ -9,10 +9,10 @@ from time import sleep
 import smbus
 
 
-ld_100 = LED(6)
-ld_75 = LED(13)
-ld_50 = LED(19)
-ld_25 = LED(26)
+ld_100 = LED(26)
+ld_75 = LED(19)
+ld_50 = LED(13)
+ld_25 = LED(6)
 
 class battshield :
   def __init__(self):
