@@ -117,7 +117,7 @@ class STC3100:
     pu8_data.append(self.readbyte(3))
     s16_value = pu8_data[5]
     s16_value = (s16_value<<8) +pu8_data[4]
-    s16_BattChargeCount = conv(s16_value,ChargeCountFactor)
+    s16_BattChargeCount = self.conv(s16_value,ChargeCountFactor)
     print("Battcharge Count : ")
     print(s16_BattChargeCount)
     
@@ -138,7 +138,7 @@ class STC3100:
     s16_value &= 0x0fff
     if(s16_value >= 0x0800):
       s16_value -= 0x1000
-    s16_BattTemperature = conv(s16_value,  TemperatureFactor)
+    s16_BattTemperature = self.conv(s16_value,  TemperatureFactor)
     print("Batt Temperature : ")
     print(s16_BattTemperature)
     
