@@ -37,9 +37,13 @@ ld_75 = LED(13)
 ld_50 = LED(19)
 ld_25 = LED(26)
 battdata = []
+ReadCnt = 0
 
 while True:
-    battdata = stc3100.readbatterydata()
+    if ReadCnt++ > 5 :
+        ReadCnt = 0
+        battdata = stc3100.readbatterydata()
+        
     print("Batt Curruent : ")
     print(battdata[0])
     print("Batt Volatage : ")
