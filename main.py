@@ -40,6 +40,8 @@ battdata = []
 
 while True:
     battdata = stc3100.readbatterydata()
+    print("Batt Curruent : ")
+    print(battdata[0])
     print("Batt Volatage : ")
     print(battdata[1])
     sleep(0.25)
