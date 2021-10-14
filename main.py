@@ -30,7 +30,7 @@ while True:
     if(status == 0x000C ) : # Batteryt current (b0100) & Voltage & Temperature (b1000) Converion 
         battdata = stc3100.readbatterydata()
         ErrorCnt = 0
-    battshield.indicatebatt(battdata[1])
+    battshield.indicatebatt(battdata)
     
     if(ErrorCnt > 40):
         battshield.commerror()
