@@ -23,16 +23,15 @@ ReadCnt = 0
 ErrorCnt = 0
 
 while True:
-    sleep(0.5)
+    sleep(0.2)
     status = stc3100.readbyte(1) # 1 is Control and Status data
     if(status == 0x000C ) : # Batteryt current (b0100) & Voltage & Temperature (b1000) Converion 
         battdata = stc3100.readbatterydata()
-        battshield.indicatebatt(battdata[1])
         ErrorCnt = 0
-    else :
-        ErrorCnt += 1
-        print(ErrorCnt)
-        if(ErrorCnt > 20):
-            battshield.commerror()
+    battshield.indicatebatt(battdata[1])
+    
+    if(ErrorCnt > 40):
+        battshield.commerror()
+    ErrorCnt += 1
    
     
