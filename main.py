@@ -31,7 +31,10 @@ while True:
         battdata = stc3100.readbatterydata()
         ErrorCnt = 0
     battshield.indicatebatt(battdata)
-    
+    print("current")
+    print(battdata[0])
+    print("voltage")
+    print(battdata[1])
     if(ErrorCnt > 40):
         battshield.commerror()
     ErrorCnt += 1
