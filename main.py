@@ -22,6 +22,8 @@ battdata = []
 ReadCnt = 0
 ErrorCnt = 0
 
+battdata = stc3100.readbatterydata()
+
 while True:
     sleep(0.2)
     status = stc3100.readbyte(1) # 1 is Control and Status data
